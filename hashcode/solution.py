@@ -10,4 +10,4 @@ if __name__ == "__main__":
     n_books, n_libs, n_days, scores, libs = parse_data(filename)
     system = System(libraries=libs, books=scores, n_days=n_days)
     solution = system.generate_solution()
-    write_submission(len(solution), solution, filename=filename)
+    write_submission(len(solution), solution, filename=f"{filename}_solution.txt")
