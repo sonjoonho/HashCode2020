@@ -7,7 +7,7 @@ from hashcode.signup import SignUp
 class System:
 
     def __init__(self, libraries: List[Library], books: List[int], n_days: int):
-        self.libraries = sorted(libraries, key=lambda l: l.signup_days)
+        self.libraries = list(sorted(libraries, key=lambda l: l.signup_days))
         self.books = books
         self.n_days = n_days
 
@@ -17,12 +17,12 @@ class System:
     def generate_solution(self) -> List[SignUp]:
         
         days_left = self.n_days
-        current_lib = self.libraries[0]
+        current_lib: Library = self.libraries[0]
         result: [SignUp] = []
         books_scanned: [int] = []
         while current_lib is not None:
             books = current_lib.get_books_scanned_from_initialization_day(days_left, self.books)
-            result.append(SignUp(current_lib.id, books))
+            result.append(SignUp(current_lib.lib_id, books))
             for book in books:
                 books_scanned.append(book)
             days_left -= current_lib.signup_days
