@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from hashcode.library import Library
 from hashcode.signup import SignUp
@@ -30,15 +30,18 @@ class System:
         return result
             
 
-    def get_next_lib(self, days_left: int, blacklist: List[int]):
+    def get_next_lib(self, days_left: int, blacklist: List[int]) -> Optional[Library]:
+
         # 1. No libs left
         # 2. No days left
 
-        # Need to blacklist
         while self.libraries:
             lib = self.libraries.pop()
             if self._library_is_valid(lib, days_left, blacklist):
                 return lib
+
+        # No further valid candidate libraries
+        return None
 
     def _library_is_valid(self, library: Library, days_left: int, blacklist: List[int]) -> bool:
         """
