@@ -8,6 +8,8 @@ class System:
 
     def __init__(self, libraries: List[Library], books: List[int], n_days: int):
         self.libraries = list(sorted(libraries, key=lambda l: l.signup_days))
+        for lib in self.libraries:
+            lib.sort_books(scores=books)
         self.books = books
         self.n_days = n_days
 
@@ -18,7 +20,7 @@ class System:
         current_lib: Library = self.get_next_lib(days_left, books_scanned)
         result: [SignUp] = []
         while current_lib is not None:
-            books = current_lib.get_books_scanned_from_initialization_day(days_left, self.books)
+            books = current_lib.get_books_scanned_from_signup_day(days_left)
             result.append(SignUp(current_lib.lib_id, books))
             for book in books:
                 books_scanned.add(book)
@@ -31,22 +33,25 @@ class System:
 
         # 1. No libs left
         # 2. No days left
+        best_lib = None
+        best_score = 0
 
-        while self.libraries:
-            lib = self.libraries.pop(0)
-            if self._library_is_valid(lib, days_left, blacklist):
-                return lib
+        for lib in self.libraries:
+            if lib.signup_days > days_left:
+                break
+            score = self._compute_score_and_remove_blacklisted_books(lib, days_left, blacklist)
+            if score > best_score:
+                best_lib = lib
+                best_score = score
 
         # No further valid candidate libraries
-        return None
+        return best_lib
 
-    def _library_is_valid(self, library: Library, days_left: int, blacklist: Set[int]) -> bool:
+    def _compute_score_and_remove_blacklisted_books(self, library: Library, days_left: int, blacklist: Set[int]) -> int:
         """
         Checks that the library has book that are not in the blacklist.
         WARNING: This function removes books that are in the blaclist from the library -> side effecting!
         """
-        if library.signup_days > days_left:
-            return False
 
         non_blacklist_books = []
         while library.books:
@@ -56,7 +61,7 @@ class System:
 
         library.books = non_blacklist_books
 
-        return len(non_blacklist_books) > 0
+        return library.get_score_for_signup_day(days_left, self.books)
 
     # Should sort libraries by order of signup time increasing.
     # Then perform second pass and scan based on book scores, removing duplicates (or adding them to a blacklist).
