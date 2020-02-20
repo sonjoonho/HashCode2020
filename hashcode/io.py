@@ -41,7 +41,7 @@ book_ids: the ids of the books to scan from that library in the order in which t
 def write_submission(n_libs: int, solutions: List[SignUp], filename="solution.txt"):
     lines = [str(n_libs)]
     for s in solutions:
-        lines.append(f"{s.id} {s.n_books}")
+        lines.append(f"{s.lib_id} {s.n_books}")
         lines.append(f"{' '.join(str(s) for s in s.book_ids)}")
     with open(filename, "wt") as f:
         f.writelines('\n'.join(lines))
