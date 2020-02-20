@@ -1,6 +1,7 @@
 from typing import List
 
 from hashcode.library import Library
+from hashcode.signup import SignUp
 
 
 def parse_data(filename: str):
@@ -37,7 +38,7 @@ book_ids: the ids of the books to scan from that library in the order in which t
 """
 
 
-def write_submission(n_libs: int, solutions, filename="solution.txt"):
+def write_submission(n_libs: int, solutions: List[SignUp], filename="solution.txt"):
     lines = [str(n_libs)]
     for s in solutions:
         lines.append(f"{s.id} {s.n_books}")
