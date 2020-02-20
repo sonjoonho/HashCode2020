@@ -21,12 +21,14 @@ class Library:
         # Sort books in score descending
 
         # Get scores of books
-        sorted_books = sorted(self.books, key=lambda b: scores[b])
+        sorted_books = list(sorted(self.books, key=lambda b: scores[b]))
 
         days_left -= self.signup_days
         books_scanned = []
-        while days_left > 0:
+        while days_left > 0 and sorted_books:
             for _ in range(self.scan_limit):
+                if not sorted_books:
+                    break
                 books_scanned.append(sorted_books.pop(0))
             days_left -= 1
 
