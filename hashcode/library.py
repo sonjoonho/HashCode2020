@@ -16,10 +16,9 @@ class Library:
     """Uses the days left (assuming signup has not started yet) and
     returns a list of tuples of exact books to return.
     """
-    def get_books_scanned_from_initialization_day(self, days_left: int):
+    def get_books_scanned_from_initialization_day(self, days_left: int, scores: List[int]):
         # Sort books in score descending
-        # TODO(Will) help!
-        sorted_books = []
+        sorted_books = [b for _, b in sorted(zip(scores, self.books))]
 
         days_left -= self.signup_days
         books_scanned = []
