@@ -17,9 +17,9 @@ class System:
     def generate_solution(self) -> List[SignUp]:
         
         days_left = self.n_days
-        current_lib: Library = self.libraries.pop(0)
-        result: [SignUp] = []
         books_scanned: [int] = []
+        current_lib: Library = self.get_next_library(days_left, books_scanned)
+        result: [SignUp] = []
         while current_lib is not None:
             books = current_lib.get_books_scanned_from_initialization_day(days_left, self.books)
             result.append(SignUp(current_lib.lib_id, books))
