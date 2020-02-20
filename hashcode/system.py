@@ -33,7 +33,7 @@ class System:
         # 2. No days left
 
         while self.libraries:
-            lib = self.libraries.pop()
+            lib = self.libraries.pop(0)
             if self._library_is_valid(lib, days_left, blacklist):
                 return lib
 
@@ -50,7 +50,7 @@ class System:
 
         non_blacklist_books = []
         while library.books:
-            book = library.books.pop()
+            book = library.books.pop(0)
             if book not in blacklist:
                 non_blacklist_books.append(book)
 
