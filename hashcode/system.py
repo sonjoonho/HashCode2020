@@ -1,4 +1,4 @@
-class System(object):
+class System:
 
     def __init__(self, libraries):
         self.libraries = libraries
