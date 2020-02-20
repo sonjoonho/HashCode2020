@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Set
 
 from hashcode.library import Library
 from hashcode.signup import SignUp
@@ -14,20 +14,20 @@ class System:
     def generate_solution(self) -> List[SignUp]:
         
         days_left = self.n_days
-        books_scanned: [int] = []
+        books_scanned: Set[int] = set()
         current_lib: Library = self.get_next_lib(days_left, books_scanned)
         result: [SignUp] = []
         while current_lib is not None:
             books = current_lib.get_books_scanned_from_initialization_day(days_left, self.books)
             result.append(SignUp(current_lib.lib_id, books))
             for book in books:
-                books_scanned.append(book)
+                books_scanned.add(book)
             days_left -= current_lib.signup_days
             current_lib = self.get_next_lib(days_left, books_scanned)
         return result
             
 
-    def get_next_lib(self, days_left: int, blacklist: List[int]) -> Optional[Library]:
+    def get_next_lib(self, days_left: int, blacklist: Set[int]) -> Optional[Library]:
 
         # 1. No libs left
         # 2. No days left
@@ -40,7 +40,7 @@ class System:
         # No further valid candidate libraries
         return None
 
-    def _library_is_valid(self, library: Library, days_left: int, blacklist: List[int]) -> bool:
+    def _library_is_valid(self, library: Library, days_left: int, blacklist: Set[int]) -> bool:
         """
         Checks that the library has book that are not in the blacklist.
         WARNING: This function removes books that are in the blaclist from the library -> side effecting!

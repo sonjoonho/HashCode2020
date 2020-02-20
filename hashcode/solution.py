@@ -6,10 +6,8 @@ from hashcode.signup import SignUp
 from hashcode.system import System
 
 if __name__ == "__main__":
-    n_books, n_libs, n_days, scores, libs = parse_data("a_example.txt")
+    filename = "a_example.txt"
+    n_books, n_libs, n_days, scores, libs = parse_data(filename)
     system = System(libraries=libs, books=scores, n_days=n_days)
-    print(n_books)
-    print(n_libs)
-    print(libs)
     solution = system.generate_solution()
-    write_submission(len(solution), solution)
+    write_submission(len(solution), solution, filename=filename)
