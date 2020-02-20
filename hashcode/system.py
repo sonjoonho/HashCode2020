@@ -7,7 +7,7 @@ from hashcode.signup import SignUp
 class System:
 
     def __init__(self, libraries: List[Library], books: List[int], n_days: int):
-        self.libraries = sorted(self.libraries, key=lambda l: l.signup_days)
+        self.libraries = sorted(libraries, key=lambda l: l.signup_days)
         self.books = books
         self.n_days = n_days
 
