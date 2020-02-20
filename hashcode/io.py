@@ -42,6 +42,6 @@ def write_submission(n_libs: int, solutions: List[SignUp], filename="solution.tx
     lines = [str(n_libs)]
     for s in solutions:
         lines.append(f"{s.id} {s.n_books}")
-        lines.append(f"{' '.join(s.book_ids)}")
+        lines.append(f"{' '.join(str(s) for s in s.book_ids)}")
     with open(filename, "wt") as f:
-        f.writelines(lines)
+        f.writelines('\n'.join(lines))
