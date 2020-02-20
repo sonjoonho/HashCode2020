@@ -28,6 +28,15 @@ def parse_data(filename: str):
         return n_books, n_libs, n_days, scores, libs
 
 
+"""
+Expecting a list of tuples/objects that have the fields
+
+id: id of the library
+k: number of books to scan from the library
+book_ids: the ids of the books to scan from that library in the order in which they are scanned without duplicates
+"""
+
+
 def write_submission(n_libs: int, solutions, filename="solution.txt"):
     lines = [str(n_libs)]
     for s in solutions:
